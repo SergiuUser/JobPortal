@@ -1,4 +1,4 @@
-using JobPortalAPI.Data;
+using JobPortalAPI.Data.Context;
 using JobPortalAPI.Models.Mapper;
 using Microsoft.EntityFrameworkCore;
 

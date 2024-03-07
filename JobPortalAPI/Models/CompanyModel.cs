@@ -18,7 +18,8 @@ namespace JobPortalAPI.Models
         public string? Website { get; set; }
         public string? LogoPath { get; set; }
         public ICollection<JobsModel>? Jobs { get; set; }
-        public CompanyAddressModel? CompanyAddres { get; set; }
+        public CompanyAddressModel? Adress { get; set; }
+        public CompanyLoginInfo? Login { get; set; }
         public ICollection<CategoryRequestModel>? CategoryRequest { get; set; }
 
     }

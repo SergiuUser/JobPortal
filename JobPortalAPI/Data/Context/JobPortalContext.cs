@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
 
-namespace JobPortalAPI.Data
+namespace JobPortalAPI.Data.Context
 {
     public class JobPortalContext : DbContext
     {
@@ -17,7 +17,7 @@ namespace JobPortalAPI.Data
         public DbSet<JobsModel> Job { get; set; }
         public DbSet<PersonModel> Peson { get; set; }
         public DbSet<PersonAddressModel> PersonAddresse { get; set; }
-        public DbSet<PersonLoginInfoModel> PersonLogin{ get; set; }
+        public DbSet<PersonLoginInfoModel> PersonLogin { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -51,7 +51,7 @@ namespace JobPortalAPI.Data
                .HasForeignKey<ApplicationResponseModel>(b => b.ApplicationID);
 
             modelBuilder.Entity<CompanyModel>()
-               .HasOne(a => a.CompanyAddres)
+               .HasOne(a => a.Adress)
                .WithOne(b => b.Company)
                .HasForeignKey<CompanyAddressModel>(b => b.CompanyID);
 
@@ -79,7 +79,6 @@ namespace JobPortalAPI.Data
                 .WithOne(e => e.Company)
                 .HasForeignKey(e => e.CompanyID)
                 .IsRequired();
-
 
             // Many to many
             modelBuilder.Entity<PersonModel>()

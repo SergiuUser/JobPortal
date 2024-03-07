@@ -3,7 +3,8 @@
     public enum RoleEnums
     {
         seeker = 1,
-        worker = 2,
-        admin = 3
+        Company = 2,
+        editor = 3,
+        admin = 4
     }
 }

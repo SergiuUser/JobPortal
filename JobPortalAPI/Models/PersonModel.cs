@@ -21,6 +21,5 @@ namespace JobPortalAPI.Models
         public PersonLoginInfoModel? Login{ get; set; }
         public PersonAddressModel? Address{ get; set; }
         public ICollection<JobsModel>? SavedJobs { get; set; }
-
     }
 }
