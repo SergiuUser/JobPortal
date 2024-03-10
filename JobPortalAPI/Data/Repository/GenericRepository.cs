@@ -3,6 +3,7 @@ using JobPortalAPI.Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Linq.Expressions;
 
 namespace JobPortalAPI.Data.Repository
 {
@@ -29,7 +30,7 @@ namespace JobPortalAPI.Data.Repository
 
         public IEnumerable<T> GetAll() => table.ToList();
 
-        public T GetById(int id) => table.Find(id);
+        public IEnumerable<T> GetByCondition(Expression<Func<T, bool>> condition) => table.Where(condition).ToList();
 
         public void Save() => _context.SaveChanges();
 
