@@ -14,6 +14,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(typeof(MapperProfiles));
 
+builder.Services.AddDbContext<JobPortalContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddScoped<IGenericRepository<CompanyModel>, GenericRepository<CompanyModel>>();
 builder.Services.AddScoped<IGenericRepository<ApplicationModel>, GenericRepository<ApplicationModel>>();
 builder.Services.AddScoped<IGenericRepository<ApplicationResponseModel>, GenericRepository<ApplicationResponseModel>>();
@@ -25,9 +28,6 @@ builder.Services.AddScoped<IGenericRepository<JobsModel>, GenericRepository<Jobs
 builder.Services.AddScoped<IGenericRepository<PersonAddressModel>, GenericRepository<PersonAddressModel>>();
 builder.Services.AddScoped<IGenericRepository<PersonLoginInfoModel>, GenericRepository<PersonLoginInfoModel>>();
 builder.Services.AddScoped<IGenericRepository<PersonModel>, GenericRepository<PersonModel>>();
-
-builder.Services.AddDbContext<JobPortalContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 

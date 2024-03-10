@@ -1,7 +1,10 @@
-﻿namespace JobPortalAPI.Services.Interaces
+﻿using JobPortalAPI.Models;
+
+namespace JobPortalAPI.Services.Interaces
 {
     public interface ICompanyService
     {
-        void 
+        Task RegisterAsync(CompanyModel entity);
+        Task<string> LoginAsync(CompanyModel entity);
     }
 }

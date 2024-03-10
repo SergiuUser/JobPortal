@@ -5,11 +5,11 @@ namespace JobPortalAPI.Data.Repository.Interfaces
 {
     public interface IGenericRepository<T> where T : class
     {
-        IEnumerable<T> GetAll();
-        IEnumerable<T> GetByCondition(Expression<Func<T, bool>> condition);
-        void Create(T entity);
-        void Update(T entity);
-        void Delete(int id);
-        void Save();
+        Task<IEnumerable<T>> GetAll();
+        Task<IEnumerable<T>> GetByCondition(Expression<Func<T, bool>> condition);
+        Task CreateAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(int id);
+        Task SaveAsync();
     }
 }

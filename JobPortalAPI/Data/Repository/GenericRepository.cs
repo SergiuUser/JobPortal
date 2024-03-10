@@ -1,13 +1,11 @@
 ﻿using JobPortalAPI.Data.Context;
 using JobPortalAPI.Data.Repository.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Linq.Expressions;
 
 namespace JobPortalAPI.Data.Repository
 {
-    public abstract class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         protected readonly JobPortalContext _context;
         private DbSet<T> table;
@@ -18,26 +16,27 @@ namespace JobPortalAPI.Data.Repository
             table = _context.Set<T>();
         }
 
-        public void Create(T entity) => table.Add(entity);
+        public async Task CreateAsync(T entity) => await table.AddAsync(entity);
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            var exist = table.Find(id);
+            var exist = await table.FindAsync(id);
 
             if (exist != null)
                 table.Remove(exist);
         }
 
-        public IEnumerable<T> GetAll() => table.ToList();
+        public async Task<IEnumerable<T>> GetAll() => await table.ToListAsync();
 
-        public IEnumerable<T> GetByCondition(Expression<Func<T, bool>> condition) => table.Where(condition).ToList();
+        public async Task<IEnumerable<T>> GetByCondition(Expression<Func<T, bool>> condition) => await table.Where(condition).ToListAsync();
 
-        public void Save() => _context.SaveChanges();
+        public async Task SaveAsync() => await _context.SaveChangesAsync();
 
-        public void Update(T entity)
+        public async Task UpdateAsync(T entity)
         {
             table.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
+            await SaveAsync();
         }
     }
 }
