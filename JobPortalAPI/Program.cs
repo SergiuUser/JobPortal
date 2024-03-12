@@ -3,7 +3,12 @@ using JobPortalAPI.Data.Repository;
 using JobPortalAPI.Data.Repository.Interfaces;
 using JobPortalAPI.Models;
 using JobPortalAPI.Models.Mapper;
+using JobPortalAPI.Services;
+using JobPortalAPI.Services.Interaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +33,36 @@ builder.Services.AddScoped<IGenericRepository<JobsModel>, GenericRepository<Jobs
 builder.Services.AddScoped<IGenericRepository<PersonAddressModel>, GenericRepository<PersonAddressModel>>();
 builder.Services.AddScoped<IGenericRepository<PersonLoginInfoModel>, GenericRepository<PersonLoginInfoModel>>();
 builder.Services.AddScoped<IGenericRepository<PersonModel>, GenericRepository<PersonModel>>();
+
+builder.Services.AddScoped<ICompanyService, CompanyService>();
+builder.Services.AddScoped<IPersonService, PersonService>();
+
+builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddTransient<IImageService, ImageService>();
+
+var jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
+var jwtKey = builder.Configuration.GetSection("Jwt:Key").Get<string>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+ .AddJwtBearer(options =>
+ {
+     options.TokenValidationParameters = new TokenValidationParameters
+     {
+         ValidateIssuer = false,
+         ValidateAudience = false,
+         ValidateLifetime = true,
+         ValidateIssuerSigningKey = true,
+         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+     };
+     options.Events = new JwtBearerEvents
+     {
+         OnMessageReceived = context =>
+         {
+             context.Token = context.Request.Cookies["jwtToken"];
+             return Task.CompletedTask;
+         }
+     };
+ });
 
 var app = builder.Build();
 

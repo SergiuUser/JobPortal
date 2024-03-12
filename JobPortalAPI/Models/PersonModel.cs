@@ -16,6 +16,8 @@ namespace JobPortalAPI.Models
         [MaxLength(100)]
         [Phone]
         public string? PhoneNumber { get; set; }
+
+        public string? PhotoPath { get; set; }
         public DateTime? RegistrationDate { get; set; } = DateTime.Now;
         public ICollection<ApplicationModel>? Applications { get; set; }
         public PersonLoginInfoModel? Login{ get; set; }

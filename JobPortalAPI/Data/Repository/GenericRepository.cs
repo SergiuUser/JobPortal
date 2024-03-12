@@ -28,8 +28,9 @@ namespace JobPortalAPI.Data.Repository
 
         public async Task<IEnumerable<T>> GetAll() => await table.ToListAsync();
 
-        public async Task<IEnumerable<T>> GetByCondition(Expression<Func<T, bool>> condition) => await table.Where(condition).ToListAsync();
+        public async Task<IEnumerable<T>> GetAllByCondition(Expression<Func<T, bool>> condition) => await table.Where(condition).ToListAsync();
 
+        public async Task<T> GetOneByCondition(Expression<Func<T, bool>> condition) => await table.FirstOrDefaultAsync(condition);
         public async Task SaveAsync() => await _context.SaveChangesAsync();
 
         public async Task UpdateAsync(T entity)
