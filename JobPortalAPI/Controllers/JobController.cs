@@ -20,11 +20,7 @@ namespace JobPortalAPI.Controllers
         public async Task<IActionResult> GetAll()
         {
             var jobs = await _jobService.GetAllJobs();
-            if (jobs != null)
-            {
-                return Ok(jobs);
-            }
-            else return NotFound("No jobs were found");
+            return Ok(jobs);
         }
 
         [HttpPost("addnewjob")]

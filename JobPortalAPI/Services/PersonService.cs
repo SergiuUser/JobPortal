@@ -72,7 +72,7 @@ namespace JobPortalAPI.Services
                 Country = entity.Adress.Country,
             };
 
-            var person = new PersonModel
+            var company = new PersonModel
             {
                 FirstName = entity.Person.FirstName,
                 LastName = entity.Person.LastName,
@@ -83,12 +83,12 @@ namespace JobPortalAPI.Services
 
             if (photo != null && photo.Length > 0)
             {
-                var photoPath = await _imageService.SavePhotoAsync(photo, "photos/");
-                person.PhotoPath = photoPath;
+                var photoPath = await _imageService.SavePhotoAsync(photo);
+                company.PhotoPath = photoPath;
             }
-            else { person.PhotoPath = "uploads/photos/default.png"; }
+            else { company.PhotoPath = "uploads/photos/default.png"; }
 
-            await _repository.CreateAsync(person);
+            await _repository.CreateAsync(company);
             await _repository.SaveAsync();
 
             return "Registration successful. Please go to Login";
