@@ -8,5 +8,7 @@ namespace JobPortalAPI.Services.Interaces
     {
         Task<string> RegisterAsync(CompanyRegisterDTO entity, IFormFile photo);
         Task<string> LoginAsync(LoginDTO entity);
+        Task<IEnumerable<CompanyModel>> GetAllCompanies();
+        Task<IEnumerable<CompanyModel>> GetAllCompaniesByName(string name);
     }
 }

@@ -42,6 +42,28 @@ namespace JobPortalAPI.Controllers
             }
         }
 
+        [HttpGet("/getallcompanies")]
+        public async Task<IActionResult> GetAllCompanies()
+        {
+            var companies = await _service.GetAllCompanies();
+            if (companies != null)
+            {
+                return Ok(companies);
+            }
+            else return NotFound("No companies were found");
+        }
+
+        [HttpGet("getcompaniesbyname")]
+        public async Task<IActionResult> GetAllCompaniesByName([FromQuery] string name)
+        {
+            var companies = await _service.GetAllCompaniesByName(name);
+            if (companies != null)
+            {
+                return Ok(companies);
+            }
+            else return NotFound("No companies were found");
+        }
+
 
     }
 }
