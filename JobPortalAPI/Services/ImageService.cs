@@ -4,8 +4,8 @@ namespace JobPortalAPI.Services
 {
     public class ImageService : IImageService
     {
-        private const string PhotoUploadPath = "uploads/";
-        public async Task<string> SavePhotoAsync(IFormFile photo, string path)
+        private const string PhotoUploadPath = "uploads/photos/";
+        public async Task<string> SavePhotoAsync(IFormFile photo)
         {
             if (!Directory.Exists(PhotoUploadPath))
             {

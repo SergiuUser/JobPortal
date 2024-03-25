@@ -85,7 +85,7 @@ namespace JobPortalAPI.Services
             };
             if (photo != null && photo.Length > 0)
             {
-                var photoPath = await _imageService.SavePhotoAsync(photo, "photos/");
+                var photoPath = await _imageService.SavePhotoAsync(photo);
                 company.LogoPath = photoPath;
             }
             else { company.LogoPath = "Default"; }
@@ -94,18 +94,6 @@ namespace JobPortalAPI.Services
             await _repository.SaveAsync();
 
             return "Registration successful. Please go to Login";
-        }
-
-        public async Task<IEnumerable<CompanyModel>> GetAllCompanies()
-        {
-            return await _repository.GetAll();
-        }
-
-        public async Task<IEnumerable<CompanyModel>> GetAllCompaniesByName(string name)
-        {
-            var companies = await _repository.GetAll();
-
-            return companies.Where(n => n.Name.ToLower().Replace(" ", "").Contains(name.ToLower().Replace(" ", "")));
         }
 
     }

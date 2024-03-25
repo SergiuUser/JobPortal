@@ -2,6 +2,6 @@
 {
     public interface IImageService
     {
-        Task<string> SavePhotoAsync(IFormFile photo, string path);
+        Task<string> SavePhotoAsync(IFormFile photo);
     }
 }

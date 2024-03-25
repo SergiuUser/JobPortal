@@ -3,6 +3,10 @@ using JobPortalAPI.Models;
 using JobPortalAPI.Models.DTO;
 using JobPortalAPI.Models.Helpers;
 using JobPortalAPI.Services.Interaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Security.Claims;
 
 namespace JobPortalAPI.Services
