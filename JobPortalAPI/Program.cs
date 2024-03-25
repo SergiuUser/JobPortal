@@ -63,6 +63,7 @@ builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddTransient<IImageService, ImageService>();
 builder.Services.AddTransient<IJobService, JobService>();
+builder.Services.AddTransient<IApplicationService, ApplicationService>();
 
 builder.Services.AddHttpContextAccessor();
 
