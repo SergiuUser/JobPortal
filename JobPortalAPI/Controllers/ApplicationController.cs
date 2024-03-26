@@ -1,6 +1,5 @@
 ﻿using JobPortalAPI.Services.Interaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobPortalAPI.Controllers
@@ -15,13 +14,42 @@ namespace JobPortalAPI.Controllers
 
         [HttpPost("apply")]
         [Authorize(Roles = "seeker")]
-        public async Task<IActionResult> ApplyToJob(int jobID, string? coverLetter, IFormFile cv)
+        public async Task<IActionResult> ApplyToJob([FromQuery] int jobID, [FromQuery] string? coverLetter, IFormFile cv)
         {
             string result = await _applicationService.ApplyToJob(jobID, coverLetter, cv);
             if (result != null)
                 return Ok(result);
             else return BadRequest("Server error");
         }
+
+        [HttpDelete("cancel")]
+        [Authorize(Roles = "seeker")]
+        public async Task<IActionResult> CancelApplication([FromQuery] int applicationId)
+        {
+           string result = await _applicationService.CancelApplication(applicationId);
+                return Ok(result);
+        }
+
+        [HttpGet("applicationsforuser")]
+        [Authorize(Roles = "seeker")]
+        public async Task<IActionResult> getApplicationsforUser()
+        {
+            var applications = await _applicationService.getApplicationsForUser();
+            if (applications != null)
+                return Ok(applications);
+            else return NotFound("No applications were found");
+        }
+
+        [HttpGet("applicationsforjob")]
+        [Authorize(Roles = "company")]
+        public async Task<IActionResult> getApplicationsforUser(int jobID)
+        {
+            var applications = await _applicationService.getApplicationsForJob(jobID);
+            if (applications != null)
+                return Ok(applications);
+            else return NotFound("No applications were found");
+        }
+
 
 
 

@@ -53,9 +53,47 @@ namespace JobPortalAPI.Services
             return "The application have been submited";
         }
 
-        public Task<string> CancelApplication()
+        public async Task<string> CancelApplication(int applicationID)
         {
-            throw new NotImplementedException();
+            int personID = Convert.ToInt32(_contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            var application = await _applicationRepository.GetOneByCondition(i => i.PersonID.Equals(personID));
+            if (application != null)
+            {
+                await _applicationRepository.DeleteAsync(application.ID);
+                await _applicationRepository.SaveAsync();
+            }
+            else return "You are not authorize to do that";
+
+            return "Application was canceled, u cannot recover it";
+
+        }
+
+        public async Task<IEnumerable<ApplicationModel>> getApplicationsForJob(int jobID)
+        {
+            int companyID = Convert.ToInt32(_contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+             
+            var applications = await _applicationRepository.GetAllByCondition(i => i.JobID.Equals(jobID));
+
+            if (applications != null)
+            {
+                return applications;
+            }
+            else return null;
+
+        }
+
+        public async Task<IEnumerable<ApplicationModel>> getApplicationsForUser()
+        {
+            int personID = Convert.ToInt32(_contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            var applications = await _applicationRepository.GetAllByCondition(i => i.PersonID.Equals(personID));
+
+            if (applications != null)
+            {
+                return applications;
+            }
+            else return null;
         }
     }
 }
